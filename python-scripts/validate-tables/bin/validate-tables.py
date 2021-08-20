@@ -22,7 +22,7 @@ from lxml import etree
 docbook_nsmap = {'d': 'http://docbook.org/ns/docbook'}
 
 class DocBookError(RuntimeError):
-    """Excepiton class for DocBook formatting errors"""
+    """Exception class for DocBook formatting errors"""
 
     def __init__(self, elem, message, *args, **kwargs):
         tmp = element_info(elem)
@@ -439,7 +439,9 @@ def check_table(node):
 # Validate DocBook file
 def check_file(filename):
     """Validate tables in DocBook file."""
-    xml = etree.parse(filename)
+    parser = etree.XMLParser(load_dtd=True, huge_tree=True)
+    xml = etree.parse(filename, parser)
+    xml.xinclude()
     tablist = xml.xpath('//table|//informaltable|//entrytbl|//d:table|//d:informaltable|//d:entrytbl',
         namespaces=docbook_nsmap)
     ret = 0
