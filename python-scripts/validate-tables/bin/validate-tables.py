@@ -439,7 +439,7 @@ def check_table(node):
 # Validate DocBook file
 def check_file(filename):
     """Validate tables in DocBook file."""
-    parser = etree.XMLParser(load_dtd=True, huge_tree=True)
+    parser = etree.XMLParser(load_dtd=True, resolve_entities=True, huge_tree=True)
     try:
         xml = etree.parse(filename, parser)
         xml.xinclude()
