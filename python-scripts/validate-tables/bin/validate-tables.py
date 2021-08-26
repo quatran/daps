@@ -440,8 +440,12 @@ def check_table(node):
 def check_file(filename):
     """Validate tables in DocBook file."""
     parser = etree.XMLParser(load_dtd=True, huge_tree=True)
-    xml = etree.parse(filename, parser)
-    xml.xinclude()
+    try:
+        xml = etree.parse(filename, parser)
+        xml.xinclude()
+    except (etree.XIncludeError, etree.XMLSyntaxError) as error:
+        print(error, file=sys.stderr)
+        sys.exit(10)
     tablist = xml.xpath('//table|//informaltable|//entrytbl|//d:table|//d:informaltable|//d:entrytbl',
         namespaces=docbook_nsmap)
     ret = 0
