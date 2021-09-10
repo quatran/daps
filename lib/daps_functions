@@ -937,7 +937,7 @@ function validate {
 
     # we do not want to write a logfile this time
     WRITE_LOG=0
-    call_make "profile" "$@" || exit_on_error "Profiling failed"
+    call_make "profile" "$@" >/dev/null || exit_on_error "Profiling failed"
     call_make "$SUB_CMD" "$@"
 
 }
