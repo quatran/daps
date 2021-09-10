@@ -40,7 +40,6 @@ endif
 #
 # 1. XML validation
 #
-# do not use ":=" here !!!
 # preserve newline as "@" to restore them late
 
 ifeq "$(DOCBOOK_VERSION)" "4"
@@ -52,7 +51,6 @@ endif
 #
 # 2. Table validation
 #
-# do not use ":=" here !!!
 # preserve newline as "@" to restore them late
 
 ifneq "$(strip $(NOT_VALIDATE_TABLES))" "1"
@@ -61,7 +59,6 @@ endif
 #
 # 3. ID validation
 #    search for IDS with characters that are not A-Z, a-z, 0-9, or -
-# do not use ":=" here !!!
 
 ifeq "$(strip $(VALIDATE_IDS))" "1"
   FAULTY_IDS := $(shell $(XSLTPROC) --xinclude --stylesheet $(DAPSROOT)/daps-xslt/common/get-all-xmlids.xsl --file $(PROFILED_MAIN) $(XSLTPROCESSOR) | grep -P '[^-a-zA-Z0-9]')
