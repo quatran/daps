@@ -23,7 +23,7 @@ BIGFILE := $(TMP_DIR)/$(DOCNAME)_bigfile.xml
 bigfile: $(BIGFILE)
   ifeq "$(NOVALID)" "1"
     ifeq "$(DOCBOOK_VERSION)" "4"
-	xmllint --noent --postvalid --noout --xinclude $< && \
+	xmllint --noent --nonet --postvalid --noout --xinclude $< && \
 	  ccecho "result" "Successfully validated the bigfile at:\n$<" || \
 	  ccecho "error" "Validation failed for the bigfile at:\n$<"
     else
@@ -67,7 +67,7 @@ endif
 
 .PHONY: linkcheck
 linkcheck: | $(TMP_DIR)
-linkcheck: $(PROFILEDIR)/.validate 
+linkcheck: $(PROFILEDIR)/.validate
 linkcheck:
   ifeq "$(VERBOSITY)" "2"
 	@echo "   Running linkchecker"
@@ -119,5 +119,3 @@ productinfo: $(BIGFILE)
 	@echo -n "PRODUCTNAME=\"$(shell $(XMLSTARLET) sel $(NAMESPACE) -t -v "(/*/*/$(ELEM_PREFIX)productname)[1]" $< 2>/dev/null)\" "
 	@echo -n "PRODUCTNUMBER=\"$(shell $(XMLSTARLET) sel $(NAMESPACE) -t -v "(/*/*/$(ELEM_PREFIX)productnumber)[1]" $< 2>/dev/null)\""
   endif
-
-

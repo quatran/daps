@@ -174,11 +174,11 @@ am__v_P_1 = :
 AM_V_GEN = $(am__v_GEN_@AM_V@)
 am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 am__v_GEN_0 = @echo "  GEN     " $@;
-am__v_GEN_1 = 
+am__v_GEN_1 =
 AM_V_at = $(am__v_at_@AM_V@)
 am__v_at_ = $(am__v_at_@AM_DEFAULT_V@)
 am__v_at_0 = @
-am__v_at_1 = 
+am__v_at_1 =
 SOURCES =
 DIST_SOURCES =
 RECURSIVE_TARGETS = all-recursive check-recursive cscopelist-recursive \
@@ -412,7 +412,7 @@ AUTOMAKE_OPTIONS = 1.10 foreign dist-bzip2 no-dist-gzip no-installinfo \
 			-Wall -Werror -Wno-portability
 
 ACLOCAL_AMFLAGS = -I m4
-SUBDIRS = 
+SUBDIRS =
 
 # additional files to add to the tarball
 EXTRA_DIST := COPYING-2.0 COPYING-3.0 packaging/daps.spec
@@ -1738,11 +1738,11 @@ install-data-local:
 	install -m644 autobuild/daps-autobuild.rnc $(DESTDIR)$(datadir)/xml/$(PACKAGE)/schema/
 	install -m644 autobuild/daps-autobuild.xml $(DESTDIR)$(templatedir)
 # remove old DAPS entries in root catalog and create new entry
-@CATALOG_EDIT_TRUE@	$(XMLLINT) --nocatalogs --format $(root_catalog) | \
+@CATALOG_EDIT_TRUE@	$(XMLLINT) --nocatalogs --nonet --format $(root_catalog) | \
 @CATALOG_EDIT_TRUE@	    awk "/<\/group>/ && s == 1 {s=0;next} s == 1 {next} \
 @CATALOG_EDIT_TRUE@	      /<group id=\"$(PACKAGE)\">/{s=1;next} {print}" | \
 @CATALOG_EDIT_TRUE@	      sed '/<\/catalog>/d' >$(TMP_CATALOG)
-@CATALOG_EDIT_TRUE@	$(XMLLINT) --nocatalogs --format $(DAPS_CATALOG) | \
+@CATALOG_EDIT_TRUE@	$(XMLLINT) --nocatalogs --nonet --format $(DAPS_CATALOG) | \
 @CATALOG_EDIT_TRUE@	  awk '/<\/catalog>/{next} s == 1 {print} /<catalog/{s=1} \
 @CATALOG_EDIT_TRUE@	    END{print "</catalog>"}' >>$(TMP_CATALOG)
 @CATALOG_EDIT_TRUE@	chmod --reference=$(root_catalog) $(TMP_CATALOG)
@@ -1757,7 +1757,7 @@ install-exec-hook:
 #---------------------------Local UNINSTALL-----------------------------------
 @CATALOG_EDIT_TRUE@uninstall-local: TMP_CATALOG := $(shell mktemp -q $(BUILD_ROOT)/catalog.XXXXX)
 @CATALOG_EDIT_TRUE@uninstall-local:
-@CATALOG_EDIT_TRUE@	$(XMLLINT) --nocatalogs --format $(root_catalog) | \
+@CATALOG_EDIT_TRUE@	$(XMLLINT) --nocatalogs --nonet --format $(root_catalog) | \
 @CATALOG_EDIT_TRUE@	  awk "/<\/group>/ && s == 1 {s=0;next} s == 1 {next} /<group id=\"$(PACKAGE)\">/{s=1;next} {print}" > $(TMP_CATALOG)
 @CATALOG_EDIT_TRUE@	chmod --reference=$(root_catalog) $(TMP_CATALOG)
 @CATALOG_EDIT_TRUE@	mv $(TMP_CATALOG) $(root_catalog)

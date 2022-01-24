@@ -14,7 +14,7 @@
 AUTOMAKE_OPTIONS = 1.10 foreign dist-bzip2 no-dist-gzip no-installinfo \
 			-Wall -Werror -Wno-portability
 ACLOCAL_AMFLAGS = -I m4
-SUBDIRS = 
+SUBDIRS =
 
 # additional files to add to the tarball
 EXTRA_DIST := COPYING-2.0 COPYING-3.0 packaging/daps.spec
@@ -223,11 +223,11 @@ install-data-local:
 	install -m644 autobuild/daps-autobuild.xml $(DESTDIR)$(templatedir)
 if CATALOG_EDIT
 # remove old DAPS entries in root catalog and create new entry
-	$(XMLLINT) --nocatalogs --format $(root_catalog) | \
+	$(XMLLINT) --nocatalogs --nonet --format $(root_catalog) | \
 	    awk "/<\/group>/ && s == 1 {s=0;next} s == 1 {next} \
 	      /<group id=\"$(PACKAGE)\">/{s=1;next} {print}" | \
 	      sed '/<\/catalog>/d' >$(TMP_CATALOG)
-	$(XMLLINT) --nocatalogs --format $(DAPS_CATALOG) | \
+	$(XMLLINT) --nocatalogs --nonet --format $(DAPS_CATALOG) | \
 	  awk '/<\/catalog>/{next} s == 1 {print} /<catalog/{s=1} \
 	    END{print "</catalog>"}' >>$(TMP_CATALOG)
 	chmod --reference=$(root_catalog) $(TMP_CATALOG)
@@ -245,7 +245,7 @@ install-exec-hook:
 if CATALOG_EDIT
 uninstall-local: TMP_CATALOG := $(shell mktemp -q $(BUILD_ROOT)/catalog.XXXXX)
 uninstall-local:
-	$(XMLLINT) --nocatalogs --format $(root_catalog) | \
+	$(XMLLINT) --nocatalogs --nonet --format $(root_catalog) | \
 	  awk "/<\/group>/ && s == 1 {s=0;next} s == 1 {next} /<group id=\"$(PACKAGE)\">/{s=1;next} {print}" > $(TMP_CATALOG)
 	chmod --reference=$(root_catalog) $(TMP_CATALOG)
 	mv $(TMP_CATALOG) $(root_catalog)
